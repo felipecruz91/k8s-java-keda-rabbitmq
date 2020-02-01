@@ -23,8 +23,8 @@ spec:
     spec:
       containers:
       - name: rabbitmq-consumer
-        image: consumer
-        imagePullPolicy: Never
+        image: felipecruz/rabbitmq-consumer
+        imagePullPolicy: Always
 ---
 apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject

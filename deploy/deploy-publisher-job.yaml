@@ -11,8 +11,8 @@ spec:
         run: publisher
     spec:
       containers:
-      - image: publisher
-        imagePullPolicy: Never
+      - image: felipecruz/rabbitmq-publisher
+        imagePullPolicy: Always
         name: publisher
         resources: {}
       restartPolicy: OnFailure
