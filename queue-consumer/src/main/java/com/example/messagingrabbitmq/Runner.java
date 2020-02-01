@@ -19,7 +19,9 @@ public class Runner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("Starting consumer...");
+		System.out.println("Starting consumer. You can press Ctrl+C to shutdown application");
+
+        Thread.currentThread().join();
 	}
 
 }
