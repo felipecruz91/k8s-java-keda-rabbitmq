@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    run: publisher
+  name: publisher
+spec:
+  template:
+    metadata:
+      labels:
+        run: publisher
+    spec:
+      containers:
+      - image: publisher
+        imagePullPolicy: Never
+        name: publisher
+        resources: {}
+      restartPolicy: OnFailure
+status: {}

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: consumer
+  name: consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: consumer
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: consumer
+    spec:
+      containers:
+      - image: consumer
+        imagePullPolicy: Never
+        name: consumer
+        resources: {}
+status: {}
