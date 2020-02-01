@@ -41,6 +41,7 @@ public class MessagingRabbitmqApplication {
 		container.setConnectionFactory(connectionFactory);
 		container.setQueueNames(queueName);
 		container.setMessageListener(listenerAdapter);
+		container.setPrefetchCount(1);
 		return container;
 	}
 

@@ -26,7 +26,7 @@ public class Runner implements CommandLineRunner {
 			rabbitTemplate.convertAndSend(MessagingRabbitmqApplication.topicExchangeName, "foo.bar.baz", "Hello from RabbitMQ!");
 			
 			// Sleep 1 second
-			Thread.sleep(1000);
+			// Thread.sleep(1000);
 		}
 	}
 

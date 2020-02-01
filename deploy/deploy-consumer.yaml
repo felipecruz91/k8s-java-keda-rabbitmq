@@ -1,25 +1,48 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: rabbitmq-consumer
+data:
+  RabbitMqHost: YW1xcDovL3VzZXI6UEFTU1dPUkRAcmFiYml0bXEuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbDo1Njcy
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
+  name: rabbitmq-consumer
+  namespace: default
   labels:
-    run: consumer
-  name: consumer
+    app: rabbitmq-consumer
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      run: consumer
-  strategy: {}
+      app: rabbitmq-consumer
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        run: consumer
+        app: rabbitmq-consumer
     spec:
       containers:
-      - image: consumer
+      - name: rabbitmq-consumer
+        image: consumer
         imagePullPolicy: Never
-        name: consumer
-        resources: {}
-status: {}
+---
+apiVersion: keda.k8s.io/v1alpha1
+kind: ScaledObject
+metadata:
+  name: rabbitmq-consumer
+  namespace: default
+  labels:
+    deploymentName: rabbitmq-consumer
+spec:
+  scaleTargetRef:
+    deploymentName: rabbitmq-consumer
+  pollingInterval: 5   # Optional. Default: 30 seconds
+  cooldownPeriod: 30   # Optional. Default: 300 seconds
+  maxReplicaCount: 30  # Optional. Default: 100
+  triggers:
+  - type: rabbitmq
+    metadata:
+      queueName: spring-boot
+      host: RabbitMqHost
+      queueLength  : '5' # Optional. Queue length target for HPA. Default: 20 messages
+---
