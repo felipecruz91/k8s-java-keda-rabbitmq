@@ -6,6 +6,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import org.springframework.amqp.core.DirectExchange;
+
 @Component
 public class Runner implements CommandLineRunner {
 
@@ -23,7 +25,7 @@ public class Runner implements CommandLineRunner {
 			System.out.println("Sending message...");
 
 			// Send message
-			rabbitTemplate.convertAndSend(MessagingRabbitmqApplication.topicExchangeName, "foo.bar.baz", "Hello from RabbitMQ!");
+			rabbitTemplate.convertAndSend("", "spring-boot", "Hello from RabbitMQ!");
 			
 			// Sleep 1 second
 			// Thread.sleep(1000);
