@@ -1,20 +1,14 @@
 package com.example.messagingrabbitmq;
 
-import java.util.concurrent.CountDownLatch;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Receiver {
 
-	private CountDownLatch latch = new CountDownLatch(1);
-
-	public void receiveMessage(String message) {
+	public void receiveMessage(String message) throws Exception {
 		System.out.println("Received <" + message + ">");
-		latch.countDown();
+		
+		// Simulate some work
+		Thread.sleep(10);
 	}
-
-	public CountDownLatch getLatch() {
-		return latch;
-	}
-
 }

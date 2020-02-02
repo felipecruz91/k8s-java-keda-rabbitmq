@@ -1,6 +1,6 @@
 # RabbitMQ consumer and sender
 
-A simple docker container that will receive messages from a RabbitMQ queue and scale via KEDA. The receiver will receive a single message at a time (per instance), and sleep for 1 second to simulate performing work. When adding a massive amount of queue messages, KEDA will drive the container to scale out according to the event source (RabbitMQ).
+A simple docker container that will receive messages from a RabbitMQ queue and scale via KEDA. The receiver will receive a single message at a time (per instance), and sleep for 10 ms to simulate performing work. When adding a massive amount of queue messages, KEDA will drive the container to scale out according to the event source (RabbitMQ).
 
 ## Pre-requisites
 
@@ -83,7 +83,7 @@ NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 rabbitmq-consumer   0         0         0            0           3s
 ```
 
-[This consumer](https://github.com/felipecruz91/k8s-java-keda-rabbitmq/blob/master/queue-consumer/src/main/java/com/example/messagingrabbitmq/Receiver.java) is set to consume one message per instance, sleep for 1 second, and then acknowledge completion of the message.  This is used to simulate work.  The [`ScaledObject` included in the above deployment](deploy/deploy-consumer.yaml) is set to scale to a minimum of 0 replicas on no events, and up to a maximum of 15 replicas on heavy events (optimizing for a queue length of 5 message per replica).  After 30 seconds of no events the replicas will be scaled down (cooldown period).  These settings can be changed on the `ScaledObject` as needed.
+[This consumer](https://github.com/felipecruz91/k8s-java-keda-rabbitmq/blob/master/queue-consumer/src/main/java/com/example/messagingrabbitmq/Receiver.java) is set to consume one message per instance, sleep for 10 ms, and then acknowledge completion of the message.  This is used to simulate work.  The [`ScaledObject` included in the above deployment](deploy/deploy-consumer.yaml) is set to scale to a minimum of 0 replicas on no events, and up to a maximum of 15 replicas on heavy events (optimizing for a queue length of 5 message per replica).  After 30 seconds of no events the replicas will be scaled down (cooldown period).  These settings can be changed on the `ScaledObject` as needed.
 
 ### Publishing messages to the queue
 

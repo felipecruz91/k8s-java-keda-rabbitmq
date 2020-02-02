@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - image: felipecruz/rabbitmq-publisher
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         name: rabbitmq-publisher
         resources: {}
       restartPolicy: OnFailure

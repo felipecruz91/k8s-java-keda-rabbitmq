@@ -24,7 +24,7 @@ spec:
       containers:
       - name: rabbitmq-consumer
         image: felipecruz/rabbitmq-consumer
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         envFrom:
         - secretRef:
             name: rabbitmq-consumer
