@@ -6,6 +6,7 @@ A simple docker container that will receive messages from a RabbitMQ queue and s
 
 * Kubernetes cluster
 * [KEDA installed](https://github.com/kedacore/keda#setup) on the cluster
+* If using Microk8s, enable the storage plugin: ```$ microk8s.enable storage```
 
 ## Setup
 
@@ -14,8 +15,8 @@ This setup will go through creating a RabbitMQ queue on the cluster and deployin
 First you should clone the project:
 
 ```cli
-git clone https://github.com/felipecruz91/k8s-java-keda-rabbitmq
-cd k8s-java-keda-rabbitmq
+$ git clone https://github.com/felipecruz91/k8s-java-keda-rabbitmq
+$ cd k8s-java-keda-rabbitmq
 ```
 
 # Initialize A Helm chart repository
@@ -26,9 +27,19 @@ $ helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 $ helm repo update
 ```
 
-## Install RabbitMQ via Helm 3
+## Install RabbitMQ via Helm
 
-```shell
+##### Helm 3
+
+```cli
+$ helm install rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
+```
+
+NOTE: if you are running the rabbitMQ image on KinD, you will run into permission issues unless you set ``volumePermissions.enabled=true``
+
+Use the following command if you are using KinD
+
+```cli
 $ helm install rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD,volumePermissions.enabled=true stable/rabbitmq
 
 NAME: rabbitmq
@@ -76,12 +87,12 @@ rabbitmq-0   1/1     Running   0          3m3s
 
 #### Deploy a consumer
 ```cli
-kubectl apply -f deploy/deploy-consumer.yaml
+$ kubectl apply -f deploy/deploy-consumer.yaml
 ```
 
 #### Validate the consumer has deployed
 ```cli
-kubectl get deploy
+$ kubectl get deploy
 ```
 
 You should see `rabbitmq-consumer` deployment with 0 pods as there currently aren't any queue messages.  It is scale to zero.
@@ -100,19 +111,19 @@ rabbitmq-consumer   0         0         0            0           3s
 The following job will publish 100K messages to the "spring-boot" queue the deployment is listening to. As the queue builds up, KEDA will help the horizontal pod autoscaler add more and more pods until the queue is drained after about 2 minutes and up to 15 concurrent pods.
 
 ```cli
-kubectl apply -f deploy/deploy-publisher-job.yaml
+$ kubectl apply -f deploy/deploy-publisher-job.yaml
 ```
 
 #### Validate the deployment scales
 ```cli
-kubectl get deploy -w
+$ kubectl get deploy -w
 ```
 
 You can watch the pods spin up and start to process queue messages.  As the message length continues to increase, more pods will be pro-actively added.  
 
 You can see the number of messages vs the target per pod as well:
 ```cli
-kubectl get hpa
+$ kubectl get hpa
 ```
 
 After the queue is empty and the specified cooldown period (a property of the `ScaledObject`, default of 300 seconds) the last replica will scale back down to zero.
@@ -120,8 +131,8 @@ After the queue is empty and the specified cooldown period (a property of the `S
 ## Cleanup resources
 
 ```cli
-kubectl delete job rabbitmq-publisher
-kubectl delete ScaledObject rabbitmq-consumer
-kubectl delete deploy rabbitmq-consumer
-helm delete rabbitmq
+$ kubectl delete job rabbitmq-publisher
+$ kubectl delete ScaledObject rabbitmq-consumer
+$ kubectl delete deploy rabbitmq-consumer
+$ helm delete rabbitmq
 ```
