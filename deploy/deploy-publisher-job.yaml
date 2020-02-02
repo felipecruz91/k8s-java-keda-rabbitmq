@@ -2,18 +2,19 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   labels:
-    run: publisher
-  name: publisher
+    run: rabbitmq-publisher
+  name: rabbitmq-publisher
 spec:
   template:
     metadata:
       labels:
-        run: publisher
+        run: rabbitmq-publisher
     spec:
       containers:
       - image: felipecruz/rabbitmq-publisher
         imagePullPolicy: Always
-        name: publisher
+        name: rabbitmq-publisher
         resources: {}
       restartPolicy: OnFailure
+  backoffLimit: 4      
 status: {}
