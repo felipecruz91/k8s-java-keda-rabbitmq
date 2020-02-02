@@ -41,7 +41,10 @@ Use the following command if you are using KinD
 
 ```cli
 $ helm install rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD,volumePermissions.enabled=true stable/rabbitmq
+```
+After the RabbitMQ Helm chart deployment, you should see the following output:
 
+```cli
 NAME: rabbitmq
 LAST DEPLOYED: Sat Feb  1 16:52:16 2020
 NAMESPACE: default
@@ -70,7 +73,6 @@ To Access the RabbitMQ Management interface:
 
     kubectl port-forward --namespace default svc/rabbitmq 15672:15672
     echo "URL : http://127.0.0.1:15672/"
-
 ```
 
 Wait for RabbitMQ to deploy
