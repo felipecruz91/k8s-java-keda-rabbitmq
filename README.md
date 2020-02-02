@@ -19,8 +19,8 @@ $ git clone https://github.com/felipecruz91/k8s-java-keda-rabbitmq
 $ cd k8s-java-keda-rabbitmq
 ```
 
-# Initialize A Helm chart repository
-Once you have Helm ready, you can add a chart repository. One popular starting location is the official Helm stable charts:
+# Initialize a Helm chart repository
+Once you have Helm ready, you can add a chart repository. One popular starting location is the official Helm stable chart. That will contain the RabbitMQ chart that you will install afterwards.
 
 ```cli
 $ helm repo add stable https://kubernetes-charts.storage.googleapis.com/
