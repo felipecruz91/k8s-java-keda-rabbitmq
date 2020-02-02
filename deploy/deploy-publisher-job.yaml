@@ -11,9 +11,23 @@ spec:
         run: rabbitmq-publisher
     spec:
       containers:
-      - image: felipecruz/rabbitmq-publisher
+      - image: felipecruz/rabbitmq-publisher:dev
         imagePullPolicy: IfNotPresent
         name: rabbitmq-publisher
+        env:
+          - name: RABBITMQ_USER
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-secret
+                key: user
+          - name: RABBITMQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-secret
+                key: password                     
+        envFrom:
+        - configMapRef:
+            name: publisher-config 
         resources: {}
       restartPolicy: OnFailure
   backoffLimit: 4      

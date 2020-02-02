@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  MAX_MSG: "5000"
+  QUEUE_NAME: spring-boot
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: publisher-config

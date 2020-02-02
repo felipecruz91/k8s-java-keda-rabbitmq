@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class MessagingRabbitmqApplication {
 
-	static final String queueName = "spring-boot";
+	static final String queueName = System.getenv("QUEUE_NAME");
 
 	@Bean
 	Queue queue() {
@@ -29,8 +29,8 @@ public class MessagingRabbitmqApplication {
     public ConnectionFactory rabbitConnectionFactory() {
         CachingConnectionFactory connectionFactory =
             new CachingConnectionFactory("rabbitmq.default.svc.cluster.local");
-        connectionFactory.setUsername("user");
-        connectionFactory.setPassword("PASSWORD");
+        connectionFactory.setUsername(System.getenv("RABBITMQ_USER"));
+        connectionFactory.setPassword(System.getenv("RABBITMQ_PASSWORD"));
         return connectionFactory;
     }
 
