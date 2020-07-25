@@ -76,6 +76,12 @@ To Access the RabbitMQ Management interface:
     echo "URL : http://127.0.0.1:15672/"
 ```
 
+You can access the RabbitMQ management interface from:
+
+```cli
+$ kubectl port-forward --namespace default svc/rabbitmq 15672:15672 --address=0.0.0.0
+```
+
 Wait for RabbitMQ to deploy
 ⚠️ Be sure to wait until the deployment has completed before continuing. ⚠️
 
