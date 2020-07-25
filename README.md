@@ -139,3 +139,7 @@ $ kubectl delete ScaledObject rabbitmq-consumer
 $ kubectl delete deploy rabbitmq-consumer
 $ helm delete rabbitmq
 ```
+
+## Troubleshooting
+
+[RabbitMQ not running on Microk8s on an Azure VM](https://github.com/ubuntu/microk8s/issues/140#issuecomment-431475148)
