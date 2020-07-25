@@ -23,6 +23,7 @@ $ cd k8s-java-keda-rabbitmq
 Once you have Helm ready, you can add a chart repository. One popular starting location is the official Helm stable chart. That will contain the RabbitMQ chart that you will install afterwards.
 
 ```cli
+$ sudo snap install helm --classic
 $ helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 $ helm repo update
 ```
