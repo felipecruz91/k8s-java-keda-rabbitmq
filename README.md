@@ -7,6 +7,7 @@ A simple docker container that will receive messages from a RabbitMQ queue and s
 * Kubernetes cluster
 * [KEDA installed](https://github.com/kedacore/keda#setup) on the cluster
 * If using Microk8s, enable the storage plugin: ```$ microk8s.enable storage```
+* If you're running Microk8s in a VM in Azure, see this [issue](https://github.com/ubuntu/microk8s/issues/140#issuecomment-431475148).
 
 ## Setup
 
@@ -145,7 +146,3 @@ $ kubectl delete ScaledObject rabbitmq-consumer
 $ kubectl delete deploy rabbitmq-consumer
 $ helm delete rabbitmq
 ```
-
-## Troubleshooting
-
-[RabbitMQ not running on Microk8s on an Azure VM](https://github.com/ubuntu/microk8s/issues/140#issuecomment-431475148)
